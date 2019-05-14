@@ -42,12 +42,14 @@ public class Application extends android.app.Application implements HasActivityI
                     .tag("Logger:")
                     .build();
             Logger.addLogAdapter(new AndroidLogAdapter(prettyFormatStrategy));
+        }else{
+            // 记录到文件中
+            CsvFormatStrategy csvFormatStrategy = CsvFormatStrategy.newBuilder()
+                    .tag("Logger:")
+                    .build();
+            Logger.addLogAdapter(new DiskLogAdapter(csvFormatStrategy));
         }
 
-        CsvFormatStrategy csvFormatStrategy = CsvFormatStrategy.newBuilder()
-                .tag("Logger:")
-                .build();
-        Logger.addLogAdapter(new DiskLogAdapter(csvFormatStrategy));
     }
 
     @Override

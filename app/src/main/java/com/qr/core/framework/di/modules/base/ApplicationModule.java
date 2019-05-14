@@ -33,7 +33,7 @@ public class ApplicationModule {
         GsonBuilder builder = new GsonBuilder();
 
         // TODO: GSON Config
-        builder.serializeNulls()
+        builder.serializeNulls() // 序列化null
                 .enableComplexMapKeySerialization();
 
         return builder.create();
@@ -46,19 +46,20 @@ public class ApplicationModule {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
         // TODO: OkHttpClient Config
-        // 超时时间
+        // 设置超时时间
         builder.connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10,TimeUnit.SECONDS);
 
         // 网络日志记录日志记录
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(message -> Logger.i("Network Logger: " + message));
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+            @Override
+            public void log(String message) {
+                Logger.i("Network: " + message);
+            }
+        });
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         builder.addInterceptor(loggingInterceptor);
 
-        // 上传和下载进度监听
-        ProgressManager.getInstance().with(builder);
-        // 支持多个BaseUrl 和动态改变BaseUrl
-        RetrofitUrlManager.getInstance().with(builder);
         return builder.build();
     }
 
