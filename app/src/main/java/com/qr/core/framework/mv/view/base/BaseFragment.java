@@ -30,6 +30,7 @@ public abstract class BaseFragment extends RxFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(layoutRes(),container,false);
         unbinder = ButterKnife.bind(this,view);
+        initView();
         return view;
     }
 
@@ -45,4 +46,6 @@ public abstract class BaseFragment extends RxFragment {
     // ButterKnife
     @LayoutRes
     protected abstract int layoutRes();
+
+    protected abstract void initView();
 }

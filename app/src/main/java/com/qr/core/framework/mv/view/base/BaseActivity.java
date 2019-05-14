@@ -24,11 +24,14 @@ public abstract class BaseActivity extends RxAppCompatActivity implements HasSup
         super.onCreate(savedInstanceState);
         setContentView(layoutRes());
         ButterKnife.bind(this);
+        initView();
     }
 
     // ButterKnife
     @LayoutRes
     protected abstract int layoutRes();
+
+    protected abstract void initView();
 
     // Dagger-Android
     @Inject
