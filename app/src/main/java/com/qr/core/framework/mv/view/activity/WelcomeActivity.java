@@ -16,4 +16,9 @@ public class WelcomeActivity extends BaseActivity {
     protected int layoutRes() {
         return R.layout.activity_welcome;
     }
+
+    @Override
+    protected void initView() {
+
+    }
 }
