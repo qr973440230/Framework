@@ -12,6 +12,7 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
     }
@@ -30,10 +31,13 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-    implementation 'com.github.qr973440230:QRTools:1.0.7'
+
+    implementation 'com.github.qr973440230:QRTools:1.0.8'
     // Appcompat
     implementation 'androidx.appcompat:appcompat:1.0.2'
     // ConstraintLayout
@@ -51,7 +55,8 @@ dependencies {
 
     //  navigation
     def nav_version = "2.0.0"
-    implementation "androidx.navigation:navigation-fragment:$nav_version" // For Kotlin use navigation-fragment-ktx
+    implementation "androidx.navigation:navigation-fragment:$nav_version"
+    // For Kotlin use navigation-fragment-ktx
     implementation "androidx.navigation:navigation-ui:$nav_version"
 
     // workmanager
@@ -59,6 +64,11 @@ dependencies {
     implementation "androidx.work:work-runtime:$work_version"
     // optional - RxJava2 support
     implementation "androidx.work:work-rxjava2:$work_version"
+
+    // Room
+    def room_version = "2.1.0-beta01"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
 
     // RxJava RxAndroid
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'

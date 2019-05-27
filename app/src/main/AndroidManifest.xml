@@ -17,17 +17,20 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-        android:name="com.qr.core.framework.Application"
+        android:name=".Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".mv.view.activity.WelcomeActivity"
+        <activity android:name=".mv.view.activity.MainActivity"></activity>
+        <activity
+            android:name=".mv.view.activity.WelcomeActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
