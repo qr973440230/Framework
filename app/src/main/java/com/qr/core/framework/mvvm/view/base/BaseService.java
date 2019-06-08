@@ -1,4 +1,4 @@
-package com.qr.core.framework.mv.view.base;
+package com.qr.core.framework.mvvm.view.base;
 
 import android.app.Service;
 

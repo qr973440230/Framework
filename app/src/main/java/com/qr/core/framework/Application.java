@@ -3,11 +3,7 @@ package com.qr.core.framework;
 import android.app.Activity;
 import android.app.Service;
 
-import com.orhanobut.logger.AndroidLogAdapter;
-import com.orhanobut.logger.CsvFormatStrategy;
-import com.orhanobut.logger.DiskLogAdapter;
-import com.orhanobut.logger.Logger;
-import com.orhanobut.logger.PrettyFormatStrategy;
+import com.blankj.utilcode.util.LogUtils;
 import com.qr.core.framework.di.component.DaggerApplicationComponent;
 
 import javax.inject.Inject;
@@ -36,20 +32,8 @@ public class Application extends android.app.Application implements HasActivityI
                 .build()
                 .inject(this);
 
-        // 初始化日志记录
-        if(BuildConfig.DEBUG){
-            PrettyFormatStrategy prettyFormatStrategy = PrettyFormatStrategy.newBuilder()
-                    .tag("Logger:")
-                    .build();
-            Logger.addLogAdapter(new AndroidLogAdapter(prettyFormatStrategy));
-        }else{
-            // 记录到文件中
-            CsvFormatStrategy csvFormatStrategy = CsvFormatStrategy.newBuilder()
-                    .tag("Logger:")
-                    .build();
-            Logger.addLogAdapter(new DiskLogAdapter(csvFormatStrategy));
-        }
-
+        // 初始化日志记录 打印日志到文件
+        LogUtils.getConfig().setLog2FileSwitch(true);
     }
 
     @Override

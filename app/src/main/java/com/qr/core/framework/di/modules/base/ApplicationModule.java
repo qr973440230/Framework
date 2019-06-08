@@ -1,21 +1,15 @@
 package com.qr.core.framework.di.modules.base;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.orhanobut.logger.Logger;
-import com.qr.core.framework.Application;
 
-import java.io.File;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import io.reactivex.subjects.BehaviorSubject;
-import io.reactivex.subjects.Subject;
-import io.rx_cache2.internal.RxCache;
-import io.victoralbertos.jolyglot.GsonSpeaker;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -24,7 +18,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module(includes = ViewModelModule.class)
 public class ApplicationModule {
-
     // GSON
     @Singleton
     @Provides
@@ -53,7 +46,7 @@ public class ApplicationModule {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
-                Logger.i("Network: " + message);
+                LogUtils.dTag("Network",message);
             }
         });
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -77,30 +70,5 @@ public class ApplicationModule {
                 .addConverterFactory(GsonConverterFactory.create(gson));
 
         return builder.build();
-    }
-
-    // RxCache
-    @Singleton
-    @Provides
-    static RxCache rxCache(Application application, Gson gson){
-        RxCache.Builder builder = new RxCache.Builder();
-        // TODO: RxCache Config
-
-        // 设定存储路径
-        File cacheFile = new File(application.getExternalCacheDir(),"RxCache");
-        if(!cacheFile.exists()){
-            cacheFile.mkdirs();
-        }
-
-        builder.useExpiredDataIfLoaderNotAvailable(true);
-        return builder.persistence(cacheFile,new GsonSpeaker(gson));
-    }
-
-    // RxBus
-    @Singleton
-    @Provides
-    static Subject<Object> rxBus(){
-        // TODO: 修改RxBus Subject类型
-        return BehaviorSubject.create().toSerialized();
     }
 }

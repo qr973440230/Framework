@@ -34,10 +34,13 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    implementation 'com.github.qr973440230:QRTools:1.0.8'
+    // 工具
+    implementation 'com.blankj:utilcodex:1.24.2'
+    implementation 'com.github.qr973440230:QRTools:1.0.10'
+
     // Appcompat
     implementation 'androidx.appcompat:appcompat:1.0.2'
     // ConstraintLayout
@@ -47,71 +50,56 @@ dependencies {
     // Google-material-components
     implementation 'com.google.android.material:material:1.0.0'
 
+    // 谷歌全家桶
     // ViewModel and LiveData
-    def lifecycle_version = "2.0.0"
-    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
-    annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
-
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0-alpha01"
+    implementation "androidx.lifecycle:lifecycle-common-java8:2.2.0-alpha01"
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:2.2.0-alpha01"
+    testImplementation "androidx.arch.core:core-testing:2.0.1"
     //  navigation
-    def nav_version = "2.0.0"
-    implementation "androidx.navigation:navigation-fragment:$nav_version"
-    // For Kotlin use navigation-fragment-ktx
-    implementation "androidx.navigation:navigation-ui:$nav_version"
-
-    // workmanager
-    def work_version = "2.0.1"
-    implementation "androidx.work:work-runtime:$work_version"
-    // optional - RxJava2 support
-    implementation "androidx.work:work-rxjava2:$work_version"
-
+    implementation "androidx.navigation:navigation-fragment:2.1.0-alpha05"
+    implementation "androidx.navigation:navigation-ui:2.1.0-alpha05"
     // Room
-    def room_version = "2.1.0-beta01"
-    implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-runtime:2.1.0-rc01"
+    annotationProcessor "androidx.room:room-compiler:2.1.0-rc01"
+    implementation "androidx.room:room-rxjava2:2.1.0-rc01"
+    testImplementation "androidx.room:room-testing:2.1.0-rc01"
+    // Paging
+    implementation "androidx.paging:paging-runtime:2.1.0" // For Kotlin use paging-runtime-ktx
+    implementation "androidx.paging:paging-rxjava2:2.1.0"
+    testImplementation "androidx.paging:paging-common:2.1.0" // For Kotlin use paging-common-ktx
+    // work
+    implementation "androidx.work:work-runtime:2.1.0-alpha03"
+    implementation "androidx.work:work-rxjava2:2.1.0-alpha03"
+    androidTestImplementation "androidx.work:work-testing:2.1.0-alpha03"
 
     // RxJava RxAndroid
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.8'
-
-    // RxLifeCycle
-    implementation 'com.trello.rxlifecycle3:rxlifecycle-components:3.0.0'
-
-    // 网络日志 日志拦截器
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
-
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
+    // RxLife
+    implementation 'com.rxjava.rxlife:rxlife-x:1.0.6'
     // Retrofit
-    def retrofit_version = "2.4.0"
-    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+    implementation "com.squareup.retrofit2:retrofit:2.5.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.5.0"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.5.0"
     implementation 'com.google.code.gson:gson:2.8.5'
-
-    // RxCache
-    implementation 'com.github.VictorAlbertos.RxCache:runtime:1.8.3-2.x'
-    implementation 'com.github.VictorAlbertos.Jolyglot:gson:0.0.4'
+    // 网络日志 日志拦截器
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.14.1'
 
     // ButterKnife
     implementation 'com.jakewharton:butterknife:10.1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
 
     // Dagger2
-    def dagger2_version = "2.21"
-    implementation "com.google.dagger:dagger:$dagger2_version"
-    annotationProcessor "com.google.dagger:dagger-compiler:$dagger2_version"
-
+    implementation "com.google.dagger:dagger:2.22.1"
+    annotationProcessor "com.google.dagger:dagger-compiler:2.22.1"
     // Dagger2-Android
-    implementation "com.google.dagger:dagger-android:$dagger2_version"
-    implementation "com.google.dagger:dagger-android-support:$dagger2_version"
-    annotationProcessor "com.google.dagger:dagger-android-processor:$dagger2_version"
+    implementation "com.google.dagger:dagger-android:2.22.1"
+    implementation "com.google.dagger:dagger-android-support:2.22.1"
+    annotationProcessor "com.google.dagger:dagger-android-processor:2.22.1"
 
     // Glide
-    def glide_version = "4.9.0"
-    implementation "com.github.bumptech.glide:glide:$glide_version"
-    implementation "com.github.bumptech.glide:okhttp3-integration:$glide_version"
-    annotationProcessor "com.github.bumptech.glide:compiler:$glide_version"
-
-    // Logger
-    def logger_version = "2.2.0"
-    implementation "com.orhanobut:logger:$logger_version"
+    implementation "com.github.bumptech.glide:glide:4.9.0"
+    implementation "com.github.bumptech.glide:okhttp3-integration:4.9.0"
+    annotationProcessor "com.github.bumptech.glide:compiler:4.9.0"
 }

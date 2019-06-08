@@ -1,4 +1,4 @@
-package com.qr.core.framework.mv.view.base;
+package com.qr.core.framework.mvvm.view.base;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -9,14 +9,14 @@ import android.view.ViewGroup;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import dagger.android.support.AndroidSupportInjection;
 
-import com.trello.rxlifecycle3.components.support.RxFragment;
 
-
-public abstract class BaseFragment extends RxFragment {
+public abstract class BaseFragment extends Fragment {
     private Unbinder unbinder;
 
     @Override
@@ -30,7 +30,6 @@ public abstract class BaseFragment extends RxFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(layoutRes(),container,false);
         unbinder = ButterKnife.bind(this,view);
-        initView();
         return view;
     }
 
@@ -46,6 +45,4 @@ public abstract class BaseFragment extends RxFragment {
     // ButterKnife
     @LayoutRes
     protected abstract int layoutRes();
-
-    protected abstract void initView();
 }

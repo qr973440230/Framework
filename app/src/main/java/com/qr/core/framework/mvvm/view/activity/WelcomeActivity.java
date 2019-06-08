@@ -1,9 +1,9 @@
-package com.qr.core.framework.mv.view.activity;
+package com.qr.core.framework.mvvm.view.activity;
 
 import android.os.Bundle;
 
 import com.qr.core.framework.R;
-import com.qr.core.framework.mv.view.base.BaseActivity;
+import com.qr.core.framework.mvvm.view.base.BaseActivity;
 
 public class WelcomeActivity extends BaseActivity {
 
@@ -15,10 +15,5 @@ public class WelcomeActivity extends BaseActivity {
     @Override
     protected int layoutRes() {
         return R.layout.activity_welcome;
-    }
-
-    @Override
-    protected void initView() {
-
     }
 }

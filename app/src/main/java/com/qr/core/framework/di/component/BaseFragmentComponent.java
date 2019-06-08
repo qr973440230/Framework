@@ -1,6 +1,6 @@
 package com.qr.core.framework.di.component;
 
-import com.qr.core.framework.mv.view.base.BaseFragment;
+import com.qr.core.framework.mvvm.view.base.BaseFragment;
 
 import dagger.Subcomponent;
 import dagger.android.AndroidInjectionModule;
