@@ -10,7 +10,6 @@ import io.reactivex.disposables.Disposable;
 public class ViewModelScope extends ViewModel implements Scope {
     private CompositeDisposable compositeDisposable;
 
-
     @Override
     public void onScopeStart(Disposable d) {
         if(compositeDisposable == null){

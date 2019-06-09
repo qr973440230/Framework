@@ -27,7 +27,7 @@
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:targetApi="m">
         <activity
-            android:name=".mvvm.view.activity.WelcomeActivity"
+            android:name=".mvvm.view.activity.main.MainActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

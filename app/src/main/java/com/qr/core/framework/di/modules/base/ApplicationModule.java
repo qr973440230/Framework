@@ -3,6 +3,7 @@ package com.qr.core.framework.di.modules.base;
 import com.blankj.utilcode.util.LogUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.qr.core.framework.configration.retrofit.LiveDataCallAdapterFactory;
 
 import java.util.concurrent.TimeUnit;
 
@@ -65,8 +66,8 @@ public class ApplicationModule {
         builder.baseUrl("Http://www.baidu.com")
                 .client(client);
 
-        // 使用RxJava Gson
-        builder.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+        // 使用Gson LiveDataAdapter
+        builder.addCallAdapterFactory(LiveDataCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson));
 
         return builder.build();

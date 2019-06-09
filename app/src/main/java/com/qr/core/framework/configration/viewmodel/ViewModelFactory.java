@@ -41,5 +41,4 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             throw new RuntimeException(e);
         }
     }
-
 }

@@ -2,6 +2,10 @@ package com.qr.core.framework;
 
 import org.junit.Test;
 
+import io.reactivex.Maybe;
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
+
 import static org.junit.Assert.*;
 
 /**
@@ -11,7 +15,8 @@ import static org.junit.Assert.*;
  */
 public class ExampleUnitTest {
     @Test
-    public void addition_isCorrect() {
+    public void addition_isCorrect() throws InterruptedException {
         assertEquals(4, 2 + 2);
+
     }
 }
