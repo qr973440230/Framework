@@ -1,9 +1,13 @@
 package com.qr.core.framework.di.modules.base;
 
-import com.blankj.utilcode.util.LogUtils;
+import androidx.room.Room;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.qr.core.framework.configration.retrofit.LiveDataCallAdapterFactory;
+import com.orhanobut.logger.Logger;
+import com.qr.core.framework.Application;
+import com.qr.core.framework.configration.room.redis.LocalRedis;
+import com.qr.core.framework.configration.room.redis.LocalRedisDatabase;
 
 import java.util.concurrent.TimeUnit;
 
@@ -19,6 +23,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module(includes = ViewModelModule.class)
 public class ApplicationModule {
+    @Singleton
+    @Provides
+    static LocalRedis localRedis(Application application,Gson gson){
+        return new LocalRedis(Room.databaseBuilder(application,
+                LocalRedisDatabase.class, "LocalRedis.db")
+                .build().localRedisDao(), gson);
+    }
+
     // GSON
     @Singleton
     @Provides
@@ -47,7 +59,7 @@ public class ApplicationModule {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
-                LogUtils.dTag("Network",message);
+                Logger.d(message);
             }
         });
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -66,8 +78,8 @@ public class ApplicationModule {
         builder.baseUrl("Http://www.baidu.com")
                 .client(client);
 
-        // 使用Gson LiveDataAdapter
-        builder.addCallAdapterFactory(LiveDataCallAdapterFactory.create())
+        // 使用Gson RxJava
+        builder.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson));
 
         return builder.build();

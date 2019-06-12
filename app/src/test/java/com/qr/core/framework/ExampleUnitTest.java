@@ -16,7 +16,5 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws InterruptedException {
-        assertEquals(4, 2 + 2);
-
     }
 }
