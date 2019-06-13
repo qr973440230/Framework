@@ -5,9 +5,6 @@ import androidx.room.Room;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.orhanobut.logger.Logger;
-import com.qr.core.framework.Application;
-import com.qr.core.framework.configration.room.redis.LocalRedis;
-import com.qr.core.framework.configration.room.redis.LocalRedisDatabase;
 
 import java.util.concurrent.TimeUnit;
 
@@ -23,14 +20,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module(includes = ViewModelModule.class)
 public class ApplicationModule {
-    @Singleton
-    @Provides
-    static LocalRedis localRedis(Application application,Gson gson){
-        return new LocalRedis(Room.databaseBuilder(application,
-                LocalRedisDatabase.class, "LocalRedis.db")
-                .build().localRedisDao(), gson);
-    }
-
     // GSON
     @Singleton
     @Provides

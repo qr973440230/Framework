@@ -5,7 +5,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class LocalRedisEntity {
+class LocalRedisEntity {
     @NonNull
     @PrimaryKey
     String key;

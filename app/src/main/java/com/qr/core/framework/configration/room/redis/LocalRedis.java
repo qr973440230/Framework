@@ -1,66 +1,90 @@
 package com.qr.core.framework.configration.room.redis;
 
 import androidx.annotation.WorkerThread;
+import androidx.room.Room;
 
 import com.google.gson.Gson;
+import com.qr.core.framework.Application;
 
+import java.lang.reflect.Type;
 import java.util.Objects;
 
-import io.reactivex.Completable;
-import io.reactivex.Flowable;
-import io.reactivex.Observable;
-import io.reactivex.Single;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
+import io.reactivex.schedulers.Schedulers;
+
+@Singleton
 public class LocalRedis {
     private LocalRedisDao localRedisDao;
     private Gson gson;
+    private MemoryCache memoryCache;
 
-    public LocalRedis(LocalRedisDao localRedisDao, Gson gson) {
-        this.localRedisDao = localRedisDao;
+    @Inject
+    public LocalRedis(Application application, Gson gson) {
+        this.localRedisDao = Room.databaseBuilder(application,
+                LocalRedisDatabase.class,
+                "LocalRedis.db")
+                .allowMainThreadQueries()
+                .build()
+                .localRedisDao();
         this.gson = gson;
+        memoryCache = new MemoryCache();
     }
 
-    @WorkerThread
     public void put(String key,Object o){
         Objects.requireNonNull(key);
-        localRedisDao.insert(new LocalRedisEntity(key,gson.toJson(o)));
-    }
-    public Completable putAsCompletable(String key, Object o){
-        Objects.requireNonNull(key);
-        return localRedisDao.insertAsCompletable(new LocalRedisEntity(key,gson.toJson(o)));
-    }
-    public Single<Long> putAsSingle(String key,Object o){
-        Objects.requireNonNull(key);
-        return localRedisDao.insertAsSingle(new LocalRedisEntity(key,gson.toJson(o)));
+        Schedulers.io().scheduleDirect(() ->{
+            memoryCache.put(key,o);
+            localRedisDao.insert(new LocalRedisEntity(key,gson.toJson(o)));
+        });
     }
 
     @WorkerThread
     public <T> T get(String key,Class<T> tClass){
         Objects.requireNonNull(key);
-        return gson.fromJson(localRedisDao.findByKey(key).value,tClass);
-    }
+        T t = memoryCache.get(key);
 
-    public <T> Observable<T> getAsObservable(String key,Class<T> tClass){
-        Objects.requireNonNull(key);
-        return localRedisDao.findByKeyAsObservable(key)
-                .map(localRedisEntity -> {
-                    return gson.fromJson(localRedisEntity.value,tClass);
-                });
-    }
-    public <T> Flowable<T> getAsFlowable(String key,Class<T> tClass){
-        Objects.requireNonNull(key);
-        return localRedisDao.findByKeyAsFlowable(key)
-                .map(localRedisEntity -> {
-                    return gson.fromJson(localRedisEntity.value,tClass);
-                });
+        if(t != null){
+            return t;
+        }
+
+        T fromJson = gson.fromJson(localRedisDao.findByKey(key).value, tClass);
+        if(fromJson != null){
+            memoryCache.put(key,fromJson);
+        }
+
+        return fromJson;
     }
 
     @WorkerThread
-    public void clear(){
-        localRedisDao.clear();
+    public <T> T get(String key, Type type){
+        Objects.requireNonNull(key);
+        T t = memoryCache.get(key);
+
+        if(t != null){
+            return t;
+        }
+
+        T fromJson = gson.fromJson(localRedisDao.findByKey(key).value, type);
+        if(fromJson != null){
+            memoryCache.put(key,fromJson);
+        }
+
+        return fromJson;
     }
 
-    public Completable clearAsCompletable(){
-        return localRedisDao.clearCompletable();
+    public void remove(String key){
+        Schedulers.io().scheduleDirect(()->{
+           memoryCache.remove(key);
+           localRedisDao.deleteByKey(key);
+        });
+    }
+
+    public void clear(){
+        Schedulers.io().scheduleDirect(()->{
+            memoryCache.clear();
+            localRedisDao.clear();
+        });
     }
 }
